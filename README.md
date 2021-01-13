@@ -6,6 +6,19 @@ autoscale: true
 
 ![inline](logo.svg)
 
+---
+
+## Agenda
+
+* What is Spring?
+* IoC and DI (A run thru some small example applications)
+* More on Spring Beans
+* @Configuration
+* Spring MVC
+* Databases
+* Authentication
+* Spring RestTemplate vs WebClient
+
 --- 
 
 # What is Spring?
@@ -19,7 +32,21 @@ autoscale: true
 
 # Yes - but what is Spring?
 
-Core spring is based on the ideas of Inversion of Control (IoC) and Dependency Injection (DI) - so we'll start by taking a look at what that means.
+Core spring is based on the ideas of Inversion of Control (IoC) and Dependency Injection (DI) - so we'll start there.
+
+---
+
+## Dependency Injection (DI)
+
+A class is provided with the services etc that it needs rather than creating them.
+
+## Inversion of Control (IoC) - in Spring
+
+IoC is a very open design principle - but in Spring terms it mostly refers to the spring container that provide the actual DI mechanics (creation of beans, injecting them following configuration etc).
+
+---
+
+# IoC and DI applications
 
 ---
 
@@ -46,12 +73,16 @@ However - let's take a look at the code:
 
 ---
 
+### Main method in the Business Logic
+
 ```java
   public void complexCalculation() {
+    // Service 1
     Calculator calculator = new Calculator();
 
     int result = calculator.plus(2, 3);
 
+    // Service 2
     Display display = new Display();
 
     display.output(String.format("2 + 3 = %d", result));  
@@ -280,7 +311,7 @@ The context file becomes a lot smaller - it simply configures what packages to s
 
 ## Annotating classes
 
-Classes get a class level annotation stating what they are (@Service, @Component, @Repository etc)
+Classes get a class level annotation stating what sort of bean they are (@Service, @Component, @Repository etc)
 
 Injection points are often marked @Autowired [^6]
 
@@ -310,9 +341,122 @@ These examples are very simple. some other things we need to consider are
 
 # Spring Boot
 
-
 > Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".
 > We take an opinionated view of the Spring platform and third-party libraries so you can get started with minimum fuss. Most Spring Boot applications need minimal Spring configuration.
 -- Spring.io [^7]
 
-[^7]: https://spring.io/projects/spring-boot
+[^7]: https://spring.io/projects/spring-boot/
+
+---
+
+Spring Boot tries to simplify:
+
+* Setup
+* Depdenency Management
+* Configuration
+
+---
+
+## Spring Boot Starters
+
+Spring Boot provides different starters - so that you can add support for different functionality.
+
+We'll take a look at what's available after we've looked at the same test app in a Spring Boot version.[^8]
+
+[^8]: initial-spring-boot/pom.xml
+
+---
+
+## Spring Boot Application
+
+* Classes keep the same annotations as before
+* Main class gets annotated `@SpringBootApplication`
+* We will implement the CommandLineRunner as it is a command line app
+
+---
+
+```java
+@SpringBootApplication
+public class  Application implements CommandLineRunner {
+  private final ApplicationContext context;
+
+  public Application(ApplicationContext context) {
+    this.context = context;
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
+
+  @Override
+  public void run(String... args) {
+    CalculationSetterInjection calculationSetterInjection =
+      context.getBean(CalculationSetterInjection.class);
+    
+    calculationSetterInjection.complexCalculation();
+
+    CalculationConstructorInjection calculationConstructorInjection =
+      context.getBean(CalculationConstructorInjection.class);
+    
+    calculationConstructorInjection.complexCalculation();
+  }
+}
+```
+
+---
+
+## Spring Initializr
+
+https://start.spring.io/
+
+Under the Add Dependencies button you can see what starter packs you can add.
+
+---
+
+# More on Spring Beans
+
+---
+
+TODO
+
+---
+
+# @Configuration
+
+---
+
+TODO
+
+---
+
+# Spring MVC
+
+---
+
+TODO
+
+---
+
+# Databases
+
+---
+
+TODO
+
+---
+
+# Authentication
+
+---
+
+TODO
+
+---
+
+# Spring RestTemplate vs WebClient
+
+---
+
+TODO
+
+---
