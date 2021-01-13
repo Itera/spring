@@ -12,6 +12,7 @@ autoscale: true
 
 * What is Spring?
 * IoC and DI (A run thru some small example applications)
+* Common context issues
 * More on Spring Beans
 * @Configuration
 * Spring MVC
@@ -411,6 +412,13 @@ https://start.spring.io/
 
 Under the Add Dependencies button you can see what starter packs you can add.
 
+---
+
+# Common context issues
+
+---
+
+TODO
 ---
 
 # More on Spring Beans
