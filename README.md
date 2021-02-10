@@ -419,13 +419,45 @@ Under the Add Dependencies button you can see what starter packs you can add.
 ---
 
 TODO
+
 ---
 
 # More on Spring Beans
 
+Spring beans have a scope which defines lifecycle
+
+* singleton (default)
+* prototype
+
+Spring web-aware only
+
+* request
+* session
+* application
+* websocket
+
 ---
 
-TODO
+## Singleton bean
+
+The standard spring bean.
+
+The spring container will always return the same bean.
+
+## Prototype bean
+
+The spring container will return a new instance every time.
+
+---
+
+## Web aware
+
+Lifetime of web aware beans
+
+* request - single http request
+* session - http session
+* websocket - a websocket
+* application - servlet context
 
 ---
 
