@@ -461,11 +461,108 @@ Lifetime of web aware beans
 
 ---
 
-# @Configuration
+# Spring Boot Configuration
+
+* Property Files
+* Yaml files
+* Profiles
 
 ---
 
-TODO
+## Defining property file location
+
+```java
+@Configuration
+@PropertySource("classpath:somefile.properties")
+public class SomeConfiguration {}
+```
+
+---
+
+## One or more files
+
+```java
+// Single
+@PropertySource("classpath:somefile.properties")
+
+// Multiple - java 8 and above
+@PropertySource("classpath:somefile.properties")
+@PropertySource("classpath:anotherfile.properties")
+
+// Multiple - any java version
+@PropertySources({
+  @PropertySource("classpath:somefile.properties")
+  @PropertySource("classpath:anotherfile.properties")
+})
+```
+
+For multiple files - if a name collision occurs then the _last_ file read wins.
+
+---
+
+## Using property values
+
+Simplest with @Value injection
+
+```java
+@Value( "${config.property.name}" )
+private String configProperty;
+```
+
+You can inject Environment and use that:
+
+```java
+@Autowired
+private Environment env;
+
+env.getProperty("config.property.name");
+```
+
+---
+
+## ConfigurationProperties
+
+```java
+@Configuration // spring boot before 2.1 needs this in addition
+@ConfigurationProperties(prefix = "db")
+public class SomeConfig {
+  private String username;
+  private String password;
+}
+```
+
+This will read properties db.username and db.password
+
+It is a standard java bean - so you must define setters and getters (or use lombok or a kotlin data class)
+
+You can nest configuration classes and build out a property heirarchy.
+
+---
+
+## File names/types/profiles
+
+* application.properties
+* application-profileName.properties
+* properties vs yaml
+
+application*.properties/yaml are handled by default - you do not need to specify a location - just inject @Value and you're done.
+
+---
+
+### Profiles
+
+We can specify at runtime what profiles are active.
+
+Spring boot will load application-profileName.* only if profile with name profileName is active.
+
+---
+
+
+### Properties vs YAML
+
+Yaml can be used and is often useful for properties that are nested in nature.
+
+Yaml does _not_ work with PropertySource - but works fine with ConfigurationProperty and default propery (application*) loading.
 
 ---
 
