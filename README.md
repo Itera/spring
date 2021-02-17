@@ -566,11 +566,98 @@ Yaml does _not_ work with PropertySource - but works fine with ConfigurationProp
 
 ---
 
-# Spring MVC
+# Spring Boot MVC
+
+* Resources
+* Requests/sessions
+* Responses
+
+Add the web starter:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+```
 
 ---
 
-TODO
+## Resources
+
+### Get all items
+
+```java
+@RestController
+public class ExmapleController {
+    private final SomeService service;
+
+    public ExampleController(SomeService service) {
+      this.service = service;
+    }
+
+    @GetMapping("/")
+    @ResponseBody
+    public List<Example> getAllExamples() {
+        return service.examples();
+    }
+}
+```
+
+---
+
+### PathVariable
+
+`GET /3`
+
+```java
+@GetMapping("/{id}")
+@ResponseBody
+public Example getExample(@PathVariable Integer id) {
+    return service.example(id);
+}
+```
+
+---
+
+### RequestParam
+
+`GET /?id=3`
+
+```java
+@GetMapping("/")
+@ResponseBody
+public Example getExample(@RequestParam Integer id) {
+    return service.example(id);
+}
+```
+
+RequestParam can also retrieve from form posts and file uploads
+
+---
+
+### RequestBody
+
+```java
+@PostMapping("/")
+@ResponseBody
+public Example addExample(@RequestBody Example example) {
+    return service.addExample(example);
+}
+```
+
+---
+
+## Example
+
+Let's take a look at an example project.[^9]
+
+This time in kotlin with gradle using the kotlin DSL - just for fun.
+
+Initially created with spring initializer by choosing kotlin and gradle on https://start.spring.io/
+
+
+[^9]: spring-boot-web-example
 
 ---
 
