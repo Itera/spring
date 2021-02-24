@@ -22,25 +22,43 @@ class ParentRepositoryIT {
 
   @Test
   void dataWasLoaded() {
-    List<Parent> items = repository.findAll();
+    List<Parent> parents = repository.findAll();
 
-    assertEquals(9, items.size());
+    assertEquals(9, parents.size());
   }
 
   @Test
   void findSingleRecordById() {
-    Optional<Parent> item = repository.findById(3L);
+    Optional<Parent> parent = repository.findById(3L);
 
-    assertTrue(item.isPresent());
-    assertEquals("Demo 3", item.get().getName());
+    assertTrue(parent.isPresent());
+    assertEquals("Demo 3", parent.get().getName());
   }
 
   @Test
   void findRecordByName() {
-    List<Parent> items = repository.findByName("Demo 2");
+    List<Parent> parents = repository.findByName("Demo 2");
 
-    assertEquals(1, items.size());
-    assertEquals(2L, items.get(0).getId());
-    assertEquals("Demo 2", items.get(0).getName());
+    assertEquals(1, parents.size());
+    assertEquals(2L, parents.get(0).getId());
+    assertEquals("Demo 2", parents.get(0).getName());
+  }
+
+  @Test
+  void childrenFound() {
+    Optional<Parent> parent = repository.findById(1L);
+
+    assertTrue(parent.isPresent());
+    assertEquals(3, parent.get().getChildren().size());
+
+    parent = repository.findById(2L);
+
+    assertTrue(parent.isPresent());
+    assertEquals(2, parent.get().getChildren().size());
+
+    parent = repository.findById(3L);
+
+    assertTrue(parent.isPresent());
+    assertEquals(0, parent.get().getChildren().size());
   }
 }

@@ -1,0 +1,4 @@
+CREATE TABLE demo_item (
+  id INT AUTO_INCREMENT,
+  name VARCHAR(255)
+);

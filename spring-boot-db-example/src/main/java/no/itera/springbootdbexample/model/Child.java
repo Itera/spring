@@ -1,34 +1,33 @@
 package no.itera.springbootdbexample.model;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "demo_parent")
-public class Parent {
+@Table(name = "demo_child")
+public class Child {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
 
   String name;
 
-  @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY,
-      cascade = CascadeType.ALL)
-  Set<Child> children;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "parent", nullable = false)
+  private Parent parent;
 
-  public Parent() {
+  public Child() {
   }
 
-  public Parent(String name) {
+  public Child(String name, Parent parent) {
     this.name = name;
+    this.parent = parent;
   }
 
   public Long getId() {
@@ -39,8 +38,8 @@ public class Parent {
     return name;
   }
 
-  public Set<Child> getChildren() {
-    return children;
+  public Parent getParent() {
+    return parent;
   }
 
   public void setId(Long id) {
@@ -49,5 +48,9 @@ public class Parent {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public void setParent(Parent parent) {
+    this.parent = parent;
   }
 }
