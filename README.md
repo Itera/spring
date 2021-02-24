@@ -663,9 +663,168 @@ Initially created with spring initializer by choosing kotlin and gradle on https
 
 # Databases
 
+* Spring Data JPA
+* Spring Data JDBC
+
+Starters:
+
+```xml
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+```
+
 ---
 
-TODO
+## Flyway
+
+Database migration
+
+```xml
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+```
+---
+
+## H2
+
+In memory DB
+
+```xml
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+```
+
+---
+
+## Flyway migrations
+
+Flyway will automatically apply migrations found under db/migration in the classpath
+
+Migration files are SQL
+
+E.g. `V1__create_demo_parent_table.sql`
+
+```sql
+CREATE TABLE demo_parent (
+  id INT AUTO_INCREMENT,
+  name VARCHAR(255)
+);
+```
+
+---
+
+## JPA Models
+
+Spring data JPA uses standard javax.persistence annotations.
+
+Annotated spring beans. Column names match to field names if not annotated.
+
+```java
+@Entity
+@Table(name = "demo_parent")
+public class Parent {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  Long id;
+
+  String name;
+
+  @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  Set<Child> children;
+
+  // constructors, getters, setters
+}
+```
+
+---
+
+## JPA repository
+
+Spring data JPA provides a repository view with standard methods (get by ID etc)
+
+```java
+public interface ParentRepository extends JpaRepository<Parent, Long> {
+}
+```
+
+---
+
+### JPA repository methods
+
+You can add methods to the interface (spring provides the implementation) where the method name is used to generate the underlying query:
+
+```java
+  List<Parent> findByName(String name);
+```
+
+You can also specify queries in JPQL or SQL
+
+```java
+// JPQL
+@Query("SELECT c FROM cases c WHERE c.status = 1")
+Collection<Case> findAllOpenCases();
+
+// SQL
+@Query(value = "SELECT * FROM cases c WHERE c.status = 1", nativeQuery = true)
+Collection<Case> findAllOpenCases();
+```
+
+---
+
+## Testing
+
+Let's take a look at using the JPA repositories/models by looking at some `@DataJpaTest` integration tests.[^10]
+
+[^10]: spring-boot-db-example - ParentRepositoryIT/ChildRepositoryIT
+
+---
+
+## JDBC Models
+
+Spring data JDBC doesn't require domain beans - coding takes place using standard java.sql.* classes.
+
+However - it is often usful to model the data as plain spring beans and provide a row mapper implementation.
+
+```java
+public class ItemRowMapper implements RowMapper<Item> {
+  @Override
+  public Item mapRow(ResultSet resultSet, int i) throws SQLException {
+    Item item = new Item();
+
+    item.setId(resultSet.getLong("id"));
+    item.setName(resultSet.getString("name"));
+
+    return item;
+  }
+}
+```
+
+---
+
+### JDBC queries
+
+We can inject a JdbcMapper and query the database (using a row mapper if we have created one)
+
+```java
+    String query = "SELECT * FROM demo_item WHERE id = ?";
+
+    Item item = jdbcTemplate.queryForObject(query, new ItemRowMapper(), itemId);
+```
+
+For example see the Spring JDBC integration test.[^11]
+
+[^11]: spring-boot-db-example - ItemIT
 
 ---
 
