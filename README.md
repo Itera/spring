@@ -661,6 +661,169 @@ Initially created with spring initializer by choosing kotlin and gradle on https
 
 ---
 
+# Spring Web vs Spring Reactive Web
+
+Spring web uses traditional synchronous coding - and for client calls uses classes like RestTemplate.
+
+Spring Reactive Web brings asynchronous calling - and uses WebClient for client calls.
+
+We'll build a simple echo server to investigate [^10]
+
+[^10]: spring-webclient-example
+
+---
+
+## Handler
+
+Takes a request and returns some response
+
+```java
+@Component
+public class EchoHandler {
+  public Mono<ServerResponse> echo(ServerRequest request) {
+    return ServerResponse
+        .ok()
+        .contentType(MediaType.TEXT_PLAIN)
+        .body(BodyInserters.fromValue(request.queryParam("val").orElse("No value")));
+  }
+}
+```
+
+---
+
+## Routing
+
+Route a url to a handler
+
+```java
+@Configuration
+public class EchoRouter {
+  @Bean
+  public RouterFunction<ServerResponse> route(EchoHandler handler) {
+    return RouterFunctions
+        .route(RequestPredicates.GET("/echo")
+            .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), handler::echo);
+  }
+}
+```
+
+---
+
+## Testing the router/handler
+
+Test class that uses SpringExtension to run.
+
+Add a spring boot test annotation asking for a random port - this will put a WebTestClient object into the spring context.
+
+```java
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class EchoRouterTest {
+  @Autowired
+  private WebTestClient webTestClient;
+
+  @Test
+  void testEmptyEcho() {
+    webTestClient
+        .get().uri("/echo")
+        .accept(MediaType.TEXT_PLAIN)
+        .exchange()
+        .expectStatus().isOk()
+        .expectBody(String.class).isEqualTo("No value");
+  }
+```
+
+---
+
+## Run and test
+
+* http://localhost:8080/echo
+* http://localhost:8080/echo?val="Echo"
+
+Note that when we call these URLs - our entire code is asynchronous. It is spring itself that is handling synchronicity.
+
+---
+
+## WebClient
+
+We'll add a call to a remote server to test this [^11]
+
+Add a config param to application.properties for the echo server url:
+
+```
+echo.server.url=http://localhost:8000
+```
+
+[^11]: For testing - https://github.com/rpatterson/httpd-echo
+
+---
+
+## WebClient handler
+
+Create a new handler and inject the configuration:
+
+```java
+@Component
+public class RemoteEchoHandler {
+  private final WebClient client;
+
+  public RemoteEchoHandler(@Value("${echo.server.url}") String echoServerUrl) {
+    this.client = WebClient.create(echoServerUrl);
+  }
+
+  ...
+}
+```
+
+---
+
+## Handler call
+
+Use the client to run a simple get call passong on the val parameter from the request
+
+```java
+client.get().uri(uriBuilder -> uriBuilder
+        .queryParam("val", request.queryParam("val").orElse("No value"))
+        .build())
+        .retrieve()
+        .bodyToMono(String.class)
+```
+
+---
+
+## Handler call
+
+This can then be chained together with the response code
+
+```java
+public Mono<ServerResponse> echo(ServerRequest request) {
+    return client.get().uri(uriBuilder -> uriBuilder
+        .queryParam("val", request.queryParam("val").orElse("No value"))
+        .build())
+        .retrieve()
+        .bodyToMono(String.class)
+        .flatMap(body -> ServerResponse.ok().contentType(MediaType.TEXT_PLAIN).body(BodyInserters.fromValue(body)));
+  }
+```
+
+---
+
+## Run and test
+
+* http://localhost:8080/remoteEcho
+* http://localhost:8080/remoteEcho?val="Echo"
+
+Again - when we call these URLs - our code is asynchronous. It is spring itself that is handling synchronicity.
+
+
+---
+
+## Other reactive spring
+
+Reactive spring is also often used with things like spring data - allowing the use of Mono and Flux to allow asynchronous calls from the database out through spring web to outermost layer where spring itself executes the code chain.
+
+---
+
 # Databases
 
 * Spring Data JPA
@@ -784,9 +947,9 @@ Collection<Case> findAllOpenCases();
 
 ## Testing
 
-Let's take a look at using the JPA repositories/models by looking at some `@DataJpaTest` integration tests.[^10]
+Let's take a look at using the JPA repositories/models by looking at some `@DataJpaTest` integration tests.[^12]
 
-[^10]: spring-boot-db-example - ParentRepositoryIT/ChildRepositoryIT
+[^12]: spring-boot-db-example - ParentRepositoryIT/ChildRepositoryIT
 
 ---
 
@@ -834,12 +997,4 @@ For example see the Spring JDBC integration test.[^11]
 
 TODO
 
----
 
-# Spring RestTemplate vs WebClient
-
----
-
-TODO
-
----
