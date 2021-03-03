@@ -985,9 +985,9 @@ We can inject a JdbcMapper and query the database (using a row mapper if we have
     Item item = jdbcTemplate.queryForObject(query, new ItemRowMapper(), itemId);
 ```
 
-For example see the Spring JDBC integration test.[^11]
+For example see the Spring JDBC integration test.[^13]
 
-[^11]: spring-boot-db-example - ItemIT
+[^13]: spring-boot-db-example - ItemIT
 
 ---
 
