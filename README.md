@@ -419,7 +419,29 @@ Under the Add Dependencies button you can see what starter packs you can add.
 
 ---
 
-TODO
+Spring complains if it cannot build a valid context
+
+Usually it will be one of two issues:
+
+* Cannot find a bean it needs
+* Finds more than one match
+
+---
+
+## How to fix
+
+First - dig down through the stack trace - spring will try and tell you what it didn't manage to do.
+
+Things to remember:
+
+* Missing annotation on a @Component or @Service or similar?
+* Missing configuration or autoconfiguration?
+* Search by type (interface) or name can give more than one hit - can you use @Qualifier?
+* Component scanning also scans dependencies (if the package name is correct)
+  * did you get more than you bargained for?
+  * did something that was included expect certain dependencies that are not available?
+  
+
 
 ---
 
@@ -994,3 +1016,12 @@ For example see the Spring JDBC integration test.[^13]
 
 # Further Reading
 
+* Spring Auto-configuration
+* Spring Security / OAuth
+* Rest Repositories
+* Spring Web Services (XML/SOAP)
+* Spring Cloud
+
+Many useful sites out there - my current goto is 
+
+https://www.baeldung.com/
