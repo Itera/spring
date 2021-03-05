@@ -12,13 +12,14 @@ autoscale: true
 
 * What is Spring?
 * IoC and DI (A run thru some small example applications)
+* Spring & Context
+* Spring Boot
 * Common context issues
 * More on Spring Beans
-* @Configuration
-* Spring MVC
-* Databases
-* Authentication
-* Spring RestTemplate vs WebClient
+* Spring Boot Configuration
+* Spring Boot MVC
+* Spring MVC vs Spring Reactive Web
+* Databases - JPA & JDBC
 
 --- 
 
@@ -156,7 +157,7 @@ Provide (inject) the required services (dependencies) via:
 
 ## Orchestration
 
-OK - but how do we set up (or orchestrates) the application?
+OK - but how do we set up (or orchestrate ) the application?
 
 ```java
   public static void main(String[] args) {
@@ -991,10 +992,5 @@ For example see the Spring JDBC integration test.[^13]
 
 ---
 
-# Authentication
-
----
-
-TODO
-
+# Further Reading
 
