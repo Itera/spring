@@ -354,7 +354,7 @@ These examples are very simple. some other things we need to consider are
 Spring Boot tries to simplify:
 
 * Setup
-* Depdenency Management
+* Dependency Management
 * Configuration
 
 ---
@@ -435,7 +435,7 @@ First - dig down through the stack trace - spring will try and tell you what it 
 Things to remember:
 
 * Missing annotation on a @Component or @Service or similar?
-* Missing configuration or autoconfiguration?
+* Missing configuration or auto configuration?
 * Search by type (interface) or name can give more than one hit - can you use @Qualifier?
 * Component scanning also scans dependencies (if the package name is correct)
   * did you get more than you bargained for?
@@ -558,7 +558,7 @@ This will read properties db.username and db.password
 
 It is a standard java bean - so you must define setters and getters (or use lombok or a kotlin data class)
 
-You can nest configuration classes and build out a property heirarchy.
+You can nest configuration classes and build out a property hierarchy.
 
 ---
 
@@ -585,7 +585,7 @@ Spring boot will load application-profileName.* only if profile with name profil
 
 Yaml can be used and is often useful for properties that are nested in nature.
 
-Yaml does _not_ work with PropertySource - but works fine with ConfigurationProperty and default propery (application*) loading.
+Yaml does _not_ work with PropertySource - but works fine with ConfigurationProperty and default property (application*) loading.
 
 ---
 
@@ -612,7 +612,7 @@ Add the web starter:
 
 ```java
 @RestController
-public class ExmapleController {
+public class ExampleController {
     private final SomeService service;
 
     public ExampleController(SomeService service) {
@@ -802,7 +802,7 @@ public class RemoteEchoHandler {
 
 ## Handler call
 
-Use the client to run a simple get call passong on the val parameter from the request
+Use the client to run a simple get call passing on the val parameter from the request
 
 ```java
 client.get().uri(uriBuilder -> uriBuilder
@@ -980,7 +980,7 @@ Let's take a look at using the JPA repositories/models by looking at some `@Data
 
 Spring data JDBC doesn't require domain beans - coding takes place using standard java.sql.* classes.
 
-However - it is often usful to model the data as plain spring beans and provide a row mapper implementation.
+However - it is often useful to model the data as plain spring beans and provide a row mapper implementation.
 
 ```java
 public class ItemRowMapper implements RowMapper<Item> {
