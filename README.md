@@ -157,7 +157,7 @@ Provide (inject) the required services (dependencies) via:
 
 ## Orchestration
 
-OK - but how do we set up (or orchestrate ) the application?
+OK - but how do we set up (or orchestrate)  the application?
 
 ```java
   public static void main(String[] args) {
@@ -218,7 +218,7 @@ We'll be using spring's context and beans.
 
 Spring provides a set of classes (based around BeanFactory) that allows us to configure the IoC container.
 
-However - in nearly every project it is far far more common that it will use spring's application context for this.
+However - in nearly every project it is far far more common to use spring's application context for this.
 
 ---
 
@@ -1021,7 +1021,8 @@ For example see the Spring JDBC integration test.[^13]
 * Rest Repositories
 * Spring Web Services (XML/SOAP)
 * Spring Cloud
+* [Project Reactor](https://projectreactor.io/) (reactive java - Mono/Flux)
 
-Many useful sites out there - my current goto is 
+Many other useful sites out there - my current goto is 
 
 https://www.baeldung.com/
