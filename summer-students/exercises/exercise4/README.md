@@ -28,7 +28,7 @@ This uses the same code as the previous exercise. Copy the two service classes a
 
 We need access to the application context.
 
-Create a constructor that takes in ApplicationContext and store it as an instance variable on the class. You do not need to mark the constructor as Autorwired - we only have one constructor so spring will automatically inject to that.
+Create a constructor in Application that takes in ApplicationContext and store it as an instance variable on the class. You do not need to mark the constructor as Autowired - we only have one constructor so spring will automatically inject to that.
 
 ### Command Line Runner
 

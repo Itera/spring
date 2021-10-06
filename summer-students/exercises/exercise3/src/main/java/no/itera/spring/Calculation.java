@@ -4,7 +4,8 @@ public class Calculation {
   private final Calculator calculator;
   private final Display display;
 
-  public Calculation(Calculator calculator, Display display) {
+  public Calculation(Calculator calculator,
+                     Display display) {
     this.calculator = calculator;
     this.display = display;
   }

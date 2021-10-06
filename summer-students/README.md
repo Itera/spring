@@ -383,6 +383,13 @@ Classes get a class level annotation stating what sort of bean they are (@Servic
 
 Injection points are often marked @Autowired [^5]
 
+```java
+@Component
+class ServiceName {
+  ...  
+}
+```
+
 [^5]: From Spring 4.3 a spring bean class with only one constructor does not need the autowired annotation - spring will wire it
 
 ---
@@ -640,6 +647,31 @@ env.getProperty("config.property.name");
 
 ---
 
+### Example
+
+Let's add a property to exercise 3:
+
+application.properties:
+
+```
+example.property=Example
+```
+
+Inject into Calculation and send to display:
+
+```java
+  public Calculation(Calculator calculator,
+                     Display display,
+                     @Value("${example.property}") String example) {
+    this.calculator = calculator;
+    this.display = display;
+
+    this.display.output(example);
+  }
+```
+
+---
+
 ## ConfigurationProperties
 
 ```java
@@ -656,6 +688,27 @@ This will read properties db.username and db.password
 It is a standard java bean - so you must define setters and getters (or use lombok or a kotlin data class)
 
 You can nest configuration classes and build out a property hierarchy.
+
+---
+
+## Database Example
+
+```
+db.username=user
+db.password=pass
+db.host=host
+db.port=1234
+```
+
+```java
+@ConfigurationProperties(prefix = "db")
+public class DBConfig {
+  private String username;
+  private String password;
+  private String host;
+  private Integer port;
+}
+```
 
 ---
 
