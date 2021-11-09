@@ -24,7 +24,7 @@
 
 Create a package no.itera.spring.models
 
-Create a model class in that package - a java bean (or a kotlin data class) with two properties:
+Create a model class in that package - a java bean with two properties:
 
 * id: Integer
 * name: String
@@ -50,8 +50,7 @@ Create a web resource class (@RestController) that has methods for:
 
 * Get on path / - return all items from service - use @ResponseBody
 
-* Get on path /{id} - takes on id as a path variable - returns the single item requested - or throw a ResponseStatusException of type NOT_FOUND if not 
-found - use @ResponseBody
+* Get on path /{id} - takes on id as a path variable - returns the single item requested - or throw a ResponseStatusException of type NOT_FOUND if not found - use @ResponseBody
 
 * Post on path / - add a new item - if an item with the same id exists - throw a ResponseStatusException of type CONFLICT
 

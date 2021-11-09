@@ -14,8 +14,6 @@ autoscale: true
 * IoC and DI (A run thru some small example applications)
 * Spring & Context
 * Spring Boot
-* Common context issues
-* More on Spring Beans
 * Spring Boot Configuration
 * Spring Boot MVC
 
@@ -54,7 +52,7 @@ IoC is a very open design principle - but in Spring terms it mostly refers to th
 
 We start with a simple application [^2]
 
-[^2]: ../initial/pom.xml
+[^2]: ./exercises/exercise1/
 
 ---
 
@@ -164,8 +162,7 @@ Provide (inject) the required services (dependencies) via:
   private final Calculator calculator;
   private final Display display;
 
-  public CalculationConstructorInjection(Calculator calculator,
-    Display display) {
+  public Calculation(Calculator calculator, Display display) {
     this.calculator = calculator;
     this.display = display;
   }
@@ -177,6 +174,10 @@ Provide (inject) the required services (dependencies) via:
 
 OK - but how do we set up (or orchestrate) the application?
 
+---
+
+## Orchestration - Setter injection
+
 ```java
   public static void main(String[] args) {
     // Services 
@@ -184,17 +185,30 @@ OK - but how do we set up (or orchestrate) the application?
     Display display = new Display();
 
     // Setter injection
-    CalculationSetterInjection calculationSetterInjection = new CalculationSetterInjection();
-    calculationSetterInjection.setCalculator(calculator);
-    calculationSetterInjection.setDisplay(display);
+    Calculation calculation = new Calculation();
+    calculation.setCalculator(calculator);
+    calculation.setDisplay(display);
 
-    calculationSetterInjection.complexCalculation();
+    // Business logic
+    calculation.complexCalculation();
+  }
+```
+
+---
+
+## Orchestration - Constructor injection
+
+```java
+  public static void main(String[] args) {
+    // Services 
+    Calculator calculator = new Calculator();
+    Display display = new Display();
 
     // Constructor injection
-    CalculationConstructorInjection calculationConstructorInjection =
-      new CalculationConstructorInjection(calculator, display);
+    Calculation calculation = new Calculation(calculator, display);
 
-    calculationConstructorInjection.complexCalculation();
+    // Business logic
+    calculation.complexCalculation();
   }
 ```
 
@@ -210,7 +224,7 @@ OK - but how do we set up (or orchestrate) the application?
 
 First round - manual DI - no spring [^3]
 
-[^3]: ../initial-manual/pom.xml
+[^3]:  ./exercises/exercise1/
 
 ---
 
@@ -238,7 +252,7 @@ A spring bean is usually a singleton (this is the default bean scope - we will l
 
 # Spring - XML
 
-First steps are to grab some java libraries:
+First steps are to grab some java libraries. We state our dependencies in the pom.xml file used by maven:
 
 ```xml
 	<dependencies>
@@ -270,7 +284,7 @@ However - in nearly every project it is far far more common to use spring's appl
 
 ---
 
-## applicationContext.xml
+## applicationContext.xml - setter injection
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -283,14 +297,31 @@ However - in nearly every project it is far far more common to use spring's appl
   <bean id="display" class="no.itera.spring.Display"/>
   <bean id="calculator" class="no.itera.spring.Calculator"/>
 
-  <bean id="calculationConstructorInjection" class="no.itera.spring.CalculationConstructorInjection">
-    <constructor-arg name="calculator" ref="calculator"/>
-    <constructor-arg name="display" ref="display"/>
-  </bean>
-
-  <bean id="calculationSetterInjection" class="no.itera.spring.CalculationSetterInjection">
+  <bean id="calculation" class="no.itera.spring.Calculation">
     <property name="calculator" ref="calculator"/>
     <property name="display" ref="display"/>
+  </bean>
+</beans>
+```
+
+---
+
+## applicationContext.xml - constructor injection
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="display" class="no.itera.spring.Display"/>
+  <bean id="calculator" class="no.itera.spring.Calculator"/>
+
+  <bean id="calculation" class="no.itera.spring.Calculation">
+    <constructor-arg name="calculator" ref="calculator"/>
+    <constructor-arg name="display" ref="display"/>
   </bean>
 </beans>
 ```
@@ -305,15 +336,11 @@ However - in nearly every project it is far far more common to use spring's appl
       new ClassPathXmlApplicationContext("applicationContext.xml");
 
     // Get a bean by type
-    CalculationSetterInjection calculationSetterInjection =
-      context.getBean(CalculationSetterInjection.class);
-    
-    calculationSetterInjection.complexCalculation();
+    Calculation calculation = context.getBean(Calculation.class);
 
     // Get a bean by name
-    CalculationConstructorInjection calculationConstructorInjection =
-        (CalculationConstructorInjection) context.getBean("calculationConstructorInjection");
-    calculationConstructorInjection.complexCalculation();
+    Calculation calculation =
+        (Calculation) context.getBean("calculation");
 ```
 
 ---
@@ -322,7 +349,7 @@ However - in nearly every project it is far far more common to use spring's appl
 
 * Complete the spring XML configuration for the application
 
-Things to note - the Service classes are identical to those used in the previous manual project.
+Things to note - the Service classes are identical to those used in the previous exercise.
 
 The only changes here are in how we orchestrate the app.
 
@@ -330,9 +357,11 @@ The only changes here are in how we orchestrate the app.
 
 ## Exercise 2 - Walkthrough
 
-We'll be using spring's context and beans.
+We'll be using spring's context and beans [^4]
 
-[^4]: ../initial-spring/xml/pom.xml
+[^4]:  ./exercises/exercise2/
+
+--- 
 
 ## Problems
 
@@ -411,7 +440,7 @@ The code in Application is exactly the same as for the XML version
 
 Let's modify the previous version using spring's component scanning mechanism (annotations) [^6]
 
-[^6]: ../initial-spring/annotations/pom.xml
+[^6]: ./exercies/exercise3/
 
 ---
 
@@ -479,7 +508,7 @@ See README in the exercise directory.
 * Main class gets annotated `@SpringBootApplication`
 * Implement the CommandLineRunner as it is a command line app [^8]
 
-[^8]: ../initial-spring-boot/pom.xml
+[^8]: ./exercises/exercise4/
 
 ---
 
@@ -498,26 +527,12 @@ public class  Application implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
-    CalculationSetterInjection calculationSetterInjection =
-      context.getBean(CalculationSetterInjection.class);
+    Calculation calculation = context.getBean(Calculation.class);
     
-    calculationSetterInjection.complexCalculation();
-
-    CalculationConstructorInjection calculationConstructorInjection =
-      context.getBean(CalculationConstructorInjection.class);
-    
-    calculationConstructorInjection.complexCalculation();
+    calculation.complexCalculation();
   }
 }
 ```
-
----
-
-## Spring Initializr
-
-https://start.spring.io/
-
-Under the Add Dependencies button you can see what starter packs you can add.
 
 ---
 
@@ -590,40 +605,17 @@ Lifetime of web aware beans
 
 # Spring Boot Configuration
 
-* Property Files
-* Yaml files
+Spring boot has a flexible approach to loading configuration properties.
+
+For this course we will use the default application.properties file that spring initializr generates for us and simple use of @Value
+
+You may wish to read up on:
+
+* properties
+* yaml
+* @Configuration and @ConfigurationProperties 
+* @PropertySource
 * Profiles
-
----
-
-## Defining property file location
-
-```java
-@Configuration
-@PropertySource("classpath:somefile.properties")
-public class SomeConfiguration {}
-```
-
----
-
-## One or more files
-
-```java
-// Single
-@PropertySource("classpath:somefile.properties")
-
-// Multiple - java 8 and above
-@PropertySource("classpath:somefile.properties")
-@PropertySource("classpath:anotherfile.properties")
-
-// Multiple - any java version
-@PropertySources({
-  @PropertySource("classpath:somefile.properties")
-  @PropertySource("classpath:anotherfile.properties")
-})
-```
-
-For multiple files - if a name collision occurs then the _last_ file read wins.
 
 ---
 
@@ -636,15 +628,6 @@ Simplest with @Value injection
 private String configProperty;
 ```
 
-You can inject Environment and use that:
-
-```java
-@Autowired
-private Environment env;
-
-env.getProperty("config.property.name");
-```
-
 ---
 
 ### Example
@@ -654,89 +637,29 @@ Let's add a property to exercise 3:
 application.properties:
 
 ```
-example.property=Example
+calculation.heading=Calculation Result:
 ```
+
+---
 
 Inject into Calculation and send to display:
 
 ```java
   public Calculation(Calculator calculator,
                      Display display,
-                     @Value("${example.property}") String example) {
+                     @Value("${calculation.heading}") String heading) {
     this.calculator = calculator;
     this.display = display;
+    this.heading = heading;
+  }
 
-    this.display.output(example);
+  public void complexCalculation() {
+    int result = calculator.plus(2, 3);
+
+    this.display.output(this.heading);
+    this.display.output(String.format("2 + 3 = %d", result));
   }
 ```
-
----
-
-## ConfigurationProperties
-
-```java
-@Configuration // spring boot before 2.1 needs this in addition
-@ConfigurationProperties(prefix = "db")
-public class SomeConfig {
-  private String username;
-  private String password;
-}
-```
-
-This will read properties db.username and db.password
-
-It is a standard java bean - so you must define setters and getters (or use lombok or a kotlin data class)
-
-You can nest configuration classes and build out a property hierarchy.
-
----
-
-## Database Example
-
-```
-db.username=user
-db.password=pass
-db.host=host
-db.port=1234
-```
-
-```java
-@ConfigurationProperties(prefix = "db")
-public class DBConfig {
-  private String username;
-  private String password;
-  private String host;
-  private Integer port;
-}
-```
-
----
-
-## File names/types/profiles
-
-* application.properties
-* application-profileName.properties
-* properties vs yaml
-
-application*.properties/yaml are handled by default - you do not need to specify a location - just inject @Value and you're done.
-
----
-
-### Profiles
-
-We can specify at runtime what profiles are active.
-
-Spring boot will load application-profileName.* only if profile with name profileName is active.
-
----
-
-
-### Properties vs YAML
-
-Yaml can be used and is often useful for properties that are nested in nature.
-
-Yaml does _not_ work with PropertySource - but works fine with ConfigurationProperty and default property (application*) loading.
-
 ---
 
 # Spring Boot MVC
@@ -836,7 +759,7 @@ This time in kotlin with gradle using the kotlin DSL - just for fun.
 Initially created with spring initializer by choosing kotlin and gradle on https://start.spring.io/
 
 
-[^9]: ../spring-boot-web-example
+[^9]: ./exercises/exercise5/
 
 ---
 
