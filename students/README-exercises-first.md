@@ -294,10 +294,10 @@ However - in nearly every project it is far far more common to use spring's appl
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean id="display" class="no.itera.spring.Display"/>
-  <bean id="calculator" class="no.itera.spring.Calculator"/>
+  <bean id="display" class="com.itera.spring.Display"/>
+  <bean id="calculator" class="com.itera.spring.Calculator"/>
 
-  <bean id="calculation" class="no.itera.spring.Calculation">
+  <bean id="calculation" class="com.itera.spring.Calculation">
     <property name="calculator" ref="calculator"/>
     <property name="display" ref="display"/>
   </bean>
@@ -316,10 +316,10 @@ However - in nearly every project it is far far more common to use spring's appl
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean id="display" class="no.itera.spring.Display"/>
-  <bean id="calculator" class="no.itera.spring.Calculator"/>
+  <bean id="display" class="com.itera.spring.Display"/>
+  <bean id="calculator" class="com.itera.spring.Calculator"/>
 
-  <bean id="calculation" class="no.itera.spring.Calculation">
+  <bean id="calculation" class="com.itera.spring.Calculation">
     <constructor-arg name="calculator" ref="calculator"/>
     <constructor-arg name="display" ref="display"/>
   </bean>
@@ -400,7 +400,7 @@ The context file becomes a lot smaller - it simply configures what packages to s
     http://www.springframework.org/schema/context/spring-context.xsd">
 
   <context:annotation-config/>
-  <context:component-scan base-package="no.itera.spring"/>
+  <context:component-scan base-package="com.itera.spring"/>
 </beans>
 ```
 
