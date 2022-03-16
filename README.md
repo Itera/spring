@@ -10,18 +10,18 @@ autoscale: true
 
 ## Agenda
 
-* What is Spring?
-* IoC and DI (A run thru some small example applications)
-* Spring & Context
-* Spring Boot
-* Common context issues
-* More on Spring Beans
-* Spring Boot Configuration
-* Spring Boot MVC
-* Spring MVC vs Spring Reactive Web
-* Databases - JPA & JDBC
+- What is Spring?
+- IoC and DI (A run thru some small example applications)
+- Spring & Context
+- Spring Boot
+- Common context issues
+- More on Spring Beans
+- Spring Boot Configuration
+- Spring Boot MVC
+- Spring MVC vs Spring Reactive Web
+- Databases - JPA & JDBC
 
---- 
+---
 
 # What is Spring?
 
@@ -62,8 +62,8 @@ We start with a simple application [^2]
 
 ## Services
 
-* Calculator
-* Display
+- Calculator
+- Display
 
 ---
 
@@ -87,7 +87,7 @@ However - let's take a look at the code:
     // Service 2
     Display display = new Display();
 
-    display.output(String.format("2 + 3 = %d", result));  
+    display.output(String.format("2 + 3 = %d", result));
   }
 ```
 
@@ -95,8 +95,8 @@ However - let's take a look at the code:
 
 ## Problems
 
-* How do we test different implementations of either service?
-* How do we even provide different implementations?
+- How do we test different implementations of either service?
+- How do we even provide different implementations?
 
 All of these require editing the business logic class.
 
@@ -118,8 +118,8 @@ We can do this in two ways:
 
 Provide (inject) the required services (dependencies) via:
 
-* the constructor
-* setters
+- the constructor
+- setters
 
 ---
 
@@ -135,7 +135,7 @@ Provide (inject) the required services (dependencies) via:
 
   public void setDisplay(Display display) {
     this.display = display;
-  }  
+  }
 ```
 
 ---
@@ -157,11 +157,11 @@ Provide (inject) the required services (dependencies) via:
 
 ## Orchestration
 
-OK - but how do we set up (or orchestrate)  the application?
+OK - but how do we set up (or orchestrate) the application?
 
 ```java
   public static void main(String[] args) {
-    // Services 
+    // Services
     Calculator calculator = new Calculator();
     Display display = new Display();
 
@@ -190,9 +190,9 @@ Spring provides an IoC container - objects define what they need and the IoC con
 
 We'll look at three ways:
 
-* Old style (spring - with XML configured beans)
-* Annotation style (spring - with annotated classes)
-* Spring Boot
+- Old style (spring - with XML configured beans)
+- Annotation style (spring - with annotated classes)
+- Spring Boot
 
 ---
 
@@ -259,7 +259,7 @@ However - in nearly every project it is far far more common to use spring's appl
     // Get a bean by type
     CalculationSetterInjection calculationSetterInjection =
       context.getBean(CalculationSetterInjection.class);
-    
+
     calculationSetterInjection.complexCalculation();
 
     // Get a bean by name
@@ -331,21 +331,21 @@ The code in Application is exactly the same as for the XML version
 
 These examples are very simple. some other things we need to consider are
 
-* bean scopes (is it a singleton? etc)
-* qualifiers (requiring a bean and there are multiple implementations available)
+- bean scopes (is it a singleton? etc)
+- qualifiers (requiring a bean and there are multiple implementations available)
 
 ## Problems
 
-* Still a lot of boiler plate
-* Managing dependencies in a larger project is still challenging
-  
+- Still a lot of boiler plate
+- Managing dependencies in a larger project is still challenging
+
 ---
 
 # Spring Boot
 
 > Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".
 > We take an opinionated view of the Spring platform and third-party libraries so you can get started with minimum fuss. Most Spring Boot applications need minimal Spring configuration.
--- Spring.io [^7]
+> -- Spring.io [^7]
 
 [^7]: https://spring.io/projects/spring-boot/
 
@@ -353,9 +353,9 @@ These examples are very simple. some other things we need to consider are
 
 Spring Boot tries to simplify:
 
-* Setup
-* Dependency Management
-* Configuration
+- Setup
+- Dependency Management
+- Configuration
 
 ---
 
@@ -371,9 +371,9 @@ We'll take a look at what's available after we've looked at the same test app in
 
 ## Spring Boot Application
 
-* Classes keep the same annotations as before
-* Main class gets annotated `@SpringBootApplication`
-* We will implement the CommandLineRunner as it is a command line app
+- Classes keep the same annotations as before
+- Main class gets annotated `@SpringBootApplication`
+- We will implement the CommandLineRunner as it is a command line app
 
 ---
 
@@ -394,12 +394,12 @@ public class  Application implements CommandLineRunner {
   public void run(String... args) {
     CalculationSetterInjection calculationSetterInjection =
       context.getBean(CalculationSetterInjection.class);
-    
+
     calculationSetterInjection.complexCalculation();
 
     CalculationConstructorInjection calculationConstructorInjection =
       context.getBean(CalculationConstructorInjection.class);
-    
+
     calculationConstructorInjection.complexCalculation();
   }
 }
@@ -423,8 +423,8 @@ Spring complains if it cannot build a valid context
 
 Usually it will be one of two issues:
 
-* Cannot find a bean it needs
-* Finds more than one match
+- Cannot find a bean it needs
+- Finds more than one match
 
 ---
 
@@ -434,14 +434,12 @@ First - dig down through the stack trace - spring will try and tell you what it 
 
 Things to remember:
 
-* Missing annotation on a @Component or @Service or similar?
-* Missing configuration or auto configuration?
-* Search by type (interface) or name can give more than one hit - can you use @Qualifier?
-* Component scanning also scans dependencies (if the package name is correct)
-  * did you get more than you bargained for?
-  * did something that was included expect certain dependencies that are not available?
-  
-
+- Missing annotation on a @Component or @Service or similar?
+- Missing configuration or auto configuration?
+- Search by type (interface) or name can give more than one hit - can you use @Qualifier?
+- Component scanning also scans dependencies (if the package name is correct)
+  - did you get more than you bargained for?
+  - did something that was included expect certain dependencies that are not available?
 
 ---
 
@@ -449,15 +447,15 @@ Things to remember:
 
 Spring beans have a scope which defines lifecycle
 
-* singleton (default)
-* prototype
+- singleton (default)
+- prototype
 
 Spring web-aware only
 
-* request
-* session
-* application
-* websocket
+- request
+- session
+- application
+- websocket
 
 ---
 
@@ -477,18 +475,18 @@ The spring container will return a new instance every time.
 
 Lifetime of web aware beans
 
-* request - single http request
-* session - http session
-* websocket - a websocket
-* application - servlet context
+- request - single http request
+- session - http session
+- websocket - a websocket
+- application - servlet context
 
 ---
 
 # Spring Boot Configuration
 
-* Property Files
-* Yaml files
-* Profiles
+- Property Files
+- Yaml files
+- Profiles
 
 ---
 
@@ -564,11 +562,11 @@ You can nest configuration classes and build out a property hierarchy.
 
 ## File names/types/profiles
 
-* application.properties
-* application-profileName.properties
-* properties vs yaml
+- application.properties
+- application-profileName.properties
+- properties vs yaml
 
-application*.properties/yaml are handled by default - you do not need to specify a location - just inject @Value and you're done.
+application\*.properties/yaml are handled by default - you do not need to specify a location - just inject @Value and you're done.
 
 ---
 
@@ -576,24 +574,23 @@ application*.properties/yaml are handled by default - you do not need to specify
 
 We can specify at runtime what profiles are active.
 
-Spring boot will load application-profileName.* only if profile with name profileName is active.
+Spring boot will load application-profileName.\* only if profile with name profileName is active.
 
 ---
-
 
 ### Properties vs YAML
 
 Yaml can be used and is often useful for properties that are nested in nature.
 
-Yaml does _not_ work with PropertySource - but works fine with ConfigurationProperty and default property (application*) loading.
+Yaml does _not_ work with PropertySource - but works fine with ConfigurationProperty and default property (application\*) loading.
 
 ---
 
 # Spring Boot MVC
 
-* Resources
-* Requests/sessions
-* Responses
+- Resources
+- Requests/sessions
+- Responses
 
 Add the web starter:
 
@@ -679,7 +676,6 @@ This time in kotlin with gradle using the kotlin DSL - just for fun.
 
 Initially created with spring initializer by choosing kotlin and gradle on https://start.spring.io/
 
-
 [^9]: spring-boot-web-example
 
 ---
@@ -760,8 +756,8 @@ class EchoRouterTest {
 
 ## Run and test
 
-* http://localhost:8080/echo
-* http://localhost:8080/echo?val="Echo"
+- http://localhost:8080/echo
+- http://localhost:8080/echo?val="Echo"
 
 Note that when we call these URLs - our entire code is asynchronous. It is spring itself that is handling synchronicity.
 
@@ -833,11 +829,10 @@ public Mono<ServerResponse> echo(ServerRequest request) {
 
 ## Run and test
 
-* http://localhost:8080/remoteEcho
-* http://localhost:8080/remoteEcho?val="Echo"
+- http://localhost:8080/remoteEcho
+- http://localhost:8080/remoteEcho?val="Echo"
 
 Again - when we call these URLs - our code is asynchronous. It is spring itself that is handling synchronicity.
-
 
 ---
 
@@ -849,8 +844,8 @@ Reactive spring is also often used with things like spring data - allowing the u
 
 # Databases
 
-* Spring Data JPA
-* Spring Data JDBC
+- Spring Data JPA
+- Spring Data JDBC
 
 Starters:
 
@@ -877,6 +872,7 @@ Database migration
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 ```
+
 ---
 
 ## H2
@@ -978,7 +974,7 @@ Let's take a look at using the JPA repositories/models by looking at some `@Data
 
 ## JDBC Models
 
-Spring data JDBC doesn't require domain beans - coding takes place using standard java.sql.* classes.
+Spring data JDBC doesn't require domain beans - coding takes place using standard java.sql.\* classes.
 
 However - it is often useful to model the data as plain spring beans and provide a row mapper implementation.
 
@@ -1016,13 +1012,13 @@ For example see the Spring JDBC integration test.[^13]
 
 # Further Reading
 
-* Spring Auto-configuration
-* Spring Security / OAuth
-* Rest Repositories
-* Spring Web Services (XML/SOAP)
-* Spring Cloud
-* [Project Reactor](https://projectreactor.io/) (reactive java - Mono/Flux)
+- Spring Auto-configuration
+- Spring Security / OAuth
+- Rest Repositories
+- Spring Web Services (XML/SOAP)
+- Spring Cloud
+- [Project Reactor](https://projectreactor.io/) (reactive java - Mono/Flux)
 
-Many other useful sites out there - my current goto is 
+Many other useful sites out there - my current goto is
 
 https://www.baeldung.com/

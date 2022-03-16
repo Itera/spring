@@ -12,7 +12,7 @@
   * Name: spring-boot
   * Package name: com.itera.spring
   * Packaging: jar
-  * Java version: 11
+  * Java version: 17
 
 * No dependencies needed
 

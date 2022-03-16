@@ -10,14 +10,14 @@ autoscale: true
 
 ## Agenda
 
-* What is Spring?
-* IoC and DI (A run thru some small example applications)
-* Spring & Context
-* Spring Boot
-* Spring Boot Configuration
-* Spring Boot MVC
+- What is Spring?
+- IoC and DI (A run thru some small example applications)
+- Spring & Context
+- Spring Boot
+- Spring Boot Configuration
+- Spring Boot MVC
 
---- 
+---
 
 # What is Spring?
 
@@ -58,8 +58,8 @@ We start with a simple application [^2]
 
 ## Services
 
-* Calculator
-* Display
+- Calculator
+- Display
 
 ---
 
@@ -105,7 +105,7 @@ However - let's take a look at the code:
     // Service 2
     Display display = new Display();
 
-    display.output(String.format("2 + 3 = %d", result));  
+    display.output(String.format("2 + 3 = %d", result));
   }
 ```
 
@@ -113,8 +113,8 @@ However - let's take a look at the code:
 
 ## Problems
 
-* How do we test different implementations of either service?
-* How do we even provide different implementations?
+- How do we test different implementations of either service?
+- How do we even provide different implementations?
 
 All of these require editing the business logic class.
 
@@ -134,8 +134,8 @@ We can do this in two ways:
 
 Provide (inject) the required services (dependencies) via:
 
-* the constructor
-* setters
+- the constructor
+- setters
 
 ---
 
@@ -151,7 +151,7 @@ Provide (inject) the required services (dependencies) via:
 
   public void setDisplay(Display display) {
     this.display = display;
-  }  
+  }
 ```
 
 ---
@@ -180,7 +180,7 @@ OK - but how do we set up (or orchestrate) the application?
 
 ```java
   public static void main(String[] args) {
-    // Services 
+    // Services
     Calculator calculator = new Calculator();
     Display display = new Display();
 
@@ -200,7 +200,7 @@ OK - but how do we set up (or orchestrate) the application?
 
 ```java
   public static void main(String[] args) {
-    // Services 
+    // Services
     Calculator calculator = new Calculator();
     Display display = new Display();
 
@@ -216,7 +216,7 @@ OK - but how do we set up (or orchestrate) the application?
 
 ## Exercise 1
 
-* Convert the simple initial application to be constructor injected.
+- Convert the simple initial application to be constructor injected.
 
 ---
 
@@ -224,7 +224,7 @@ OK - but how do we set up (or orchestrate) the application?
 
 First round - manual DI - no spring [^3]
 
-[^3]:  ./exercises/exercise1/
+[^3]: ./exercises/exercise1/
 
 ---
 
@@ -236,9 +236,9 @@ Spring provides an IoC container - objects define what they need and the IoC con
 
 We'll look at three ways:
 
-* Old style (spring - with XML configured beans)
-* Annotation style (spring - with annotated classes)
-* Spring Boot
+- Old style (spring - with XML configured beans)
+- Annotation style (spring - with annotated classes)
+- Spring Boot
 
 ---
 
@@ -259,17 +259,17 @@ First steps are to grab some java libraries. We state our dependencies in the po
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>5.3.1</version>
+			<version>5.3.16</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>5.3.1</version>
+			<version>5.3.16</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>5.3.1</version>
+			<version>5.3.16</version>
 		</dependency>
 	</dependencies>
 ```
@@ -347,7 +347,7 @@ However - in nearly every project it is far far more common to use spring's appl
 
 ## Exercise 2
 
-* Complete the spring XML configuration for the application
+- Complete the spring XML configuration for the application
 
 Things to note - the Service classes are identical to those used in the previous exercise.
 
@@ -359,9 +359,9 @@ The only changes here are in how we orchestrate the app.
 
 We'll be using spring's context and beans [^4]
 
-[^4]:  ./exercises/exercise2/
+[^4]: ./exercises/exercise2/
 
---- 
+---
 
 ## Problems
 
@@ -415,7 +415,7 @@ Injection points are often marked @Autowired [^5]
 ```java
 @Component
 class ServiceName {
-  ...  
+  ...
 }
 ```
 
@@ -431,8 +431,8 @@ The code in Application is exactly the same as for the XML version
 
 ## Exercise 3
 
-* Annotate the two service classes and the calculation class so that the application functions.
-* Consider what annotation to use in each case.
+- Annotate the two service classes and the calculation class so that the application functions.
+- Consider what annotation to use in each case.
 
 ---
 
@@ -460,21 +460,21 @@ Let's modify the previous version using spring's component scanning mechanism (a
 
 These examples are very simple. some other things we need to consider are
 
-* bean scopes (is it a singleton? etc)
-* qualifiers (requiring a bean and there are multiple implementations available)
+- bean scopes (is it a singleton? etc)
+- qualifiers (requiring a bean and there are multiple implementations available)
 
 ## Problems
 
-* Still a lot of boiler plate
-* Managing dependencies in a larger project is still challenging
-  
+- Still a lot of boiler plate
+- Managing dependencies in a larger project is still challenging
+
 ---
 
 # Spring Boot
 
 > Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".
 > We take an opinionated view of the Spring platform and third-party libraries so you can get started with minimum fuss. Most Spring Boot applications need minimal Spring configuration.
--- Spring.io [^7]
+> -- Spring.io [^7]
 
 [^7]: https://spring.io/projects/spring-boot/
 
@@ -482,9 +482,9 @@ These examples are very simple. some other things we need to consider are
 
 Spring Boot tries to simplify:
 
-* Setup
-* Dependency Management
-* Configuration
+- Setup
+- Dependency Management
+- Configuration
 
 ---
 
@@ -504,9 +504,9 @@ See README in the exercise directory.
 
 ## Exercise 4 - Walkthrough
 
-* Classes keep the same annotations as before
-* Main class gets annotated `@SpringBootApplication`
-* Implement the CommandLineRunner as it is a command line app [^8]
+- Classes keep the same annotations as before
+- Main class gets annotated `@SpringBootApplication`
+- Implement the CommandLineRunner as it is a command line app [^8]
 
 [^8]: ./exercises/exercise4/
 
@@ -528,7 +528,7 @@ public class  Application implements CommandLineRunner {
   @Override
   public void run(String... args) {
     Calculation calculation = context.getBean(Calculation.class);
-    
+
     calculation.complexCalculation();
   }
 }
@@ -544,8 +544,8 @@ Spring complains if it cannot build a valid context
 
 Usually it will be one of two issues:
 
-* Cannot find a bean it needs
-* Finds more than one match
+- Cannot find a bean it needs
+- Finds more than one match
 
 ---
 
@@ -555,28 +555,28 @@ First - dig down through the stack trace - spring will try and tell you what it 
 
 Things to remember:
 
-* Missing annotation on a @Component or @Service or similar?
-* Missing configuration or auto configuration?
-* Search by type (interface) or name can give more than one hit - can you use @Qualifier?
-* Component scanning also scans dependencies (if the package name is correct)
-  * did you get more than you bargained for?
-  * did something that was included expect certain dependencies that are not available?
-  
+- Missing annotation on a @Component or @Service or similar?
+- Missing configuration or auto configuration?
+- Search by type (interface) or name can give more than one hit - can you use @Qualifier?
+- Component scanning also scans dependencies (if the package name is correct)
+  - did you get more than you bargained for?
+  - did something that was included expect certain dependencies that are not available?
+
 ---
 
 # More on Spring Beans
 
 Spring beans have a scope which defines lifecycle
 
-* singleton (default)
-* prototype
+- singleton (default)
+- prototype
 
 Spring web-aware only
 
-* request
-* session
-* application
-* websocket
+- request
+- session
+- application
+- websocket
 
 ---
 
@@ -596,10 +596,10 @@ The spring container will return a new instance every time.
 
 Lifetime of web aware beans
 
-* request - single http request
-* session - http session
-* websocket - a websocket
-* application - servlet context
+- request - single http request
+- session - http session
+- websocket - a websocket
+- application - servlet context
 
 ---
 
@@ -611,11 +611,11 @@ For this course we will use the default application.properties file that spring 
 
 You may wish to read up on:
 
-* properties
-* yaml
-* @Configuration and @ConfigurationProperties 
-* @PropertySource
-* Profiles
+- properties
+- yaml
+- @Configuration and @ConfigurationProperties
+- @PropertySource
+- Profiles
 
 ---
 
@@ -660,13 +660,14 @@ Inject into Calculation and send to display:
     this.display.output(String.format("2 + 3 = %d", result));
   }
 ```
+
 ---
 
 # Spring Boot MVC
 
-* Resources
-* Requests/sessions
-* Responses
+- Resources
+- Requests/sessions
+- Responses
 
 Add the web starter:
 
@@ -758,22 +759,21 @@ This time in kotlin with gradle using the kotlin DSL - just for fun.
 
 Initially created with spring initializer by choosing kotlin and gradle on https://start.spring.io/
 
-
 [^9]: ./exercises/exercise5/
 
 ---
 
 # Further Reading
 
-* Spring presentation (full) - https://github.com/itera/spring - mostly the same as this with a section on reactive java/spring and a section on databases
-* Test presentation - https://github.com/Itera/java-test
-* Spring Auto-configuration
-* Spring Security / OAuth
-* Rest Repositories
-* Spring Web Services (XML/SOAP)
-* Spring Cloud
-* [Project Reactor](https://projectreactor.io/) (reactive java - Mono/Flux)
+- Spring presentation (full) - https://github.com/itera/spring - mostly the same as this with a section on reactive java/spring and a section on databases
+- Test presentation - https://github.com/Itera/java-test
+- Spring Auto-configuration
+- Spring Security / OAuth
+- Rest Repositories
+- Spring Web Services (XML/SOAP)
+- Spring Cloud
+- [Project Reactor](https://projectreactor.io/) (reactive java - Mono/Flux)
 
-Many other useful sites out there - my current goto is 
+Many other useful sites out there - my current goto is
 
 https://www.baeldung.com/

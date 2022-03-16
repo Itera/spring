@@ -12,7 +12,7 @@
   * Name: spring-boot-web-example
   * Package name: com.itera.spring
   * Packaging: jar
-  * Java version: 11
+  * Java version: 17
 
 * Add Spring Web as dependency
 
