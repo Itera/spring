@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>no.itera</groupId>
+    <artifactId>spring-reactor</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>spring-reactor</name>
+    <description>Fagkveld - spring - reactor pom - only used for demo purposes</description>
+    <packaging>pom</packaging>
+
+
+    <modules>
+        <module>initial-manual</module>
+        <module>initial-spring-boot</module>
+        <module>initial-spring/annotations</module>
+        <module>initial-spring/xml</module>
+        <module>initial</module>
+        <module>spring-boot-db-example</module>
+        <module>spring-webclient-example</module>
+    </modules>
+
+</project>
+
+
