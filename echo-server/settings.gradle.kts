@@ -1,0 +1,1 @@
+rootProject.name = "itera.com.echo-server"
