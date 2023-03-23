@@ -232,15 +232,15 @@ However - in nearly every project it is far far more common to use spring's appl
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean id="display" class="no.itera.spring.Display"/>
-  <bean id="calculator" class="no.itera.spring.Calculator"/>
+  <bean id="display" class="com.itera.spring.Display"/>
+  <bean id="calculator" class="com.itera.spring.Calculator"/>
 
-  <bean id="calculationConstructorInjection" class="no.itera.spring.CalculationConstructorInjection">
+  <bean id="calculationConstructorInjection" class="com.itera.spring.CalculationConstructorInjection">
     <constructor-arg name="calculator" ref="calculator"/>
     <constructor-arg name="display" ref="display"/>
   </bean>
 
-  <bean id="calculationSetterInjection" class="no.itera.spring.CalculationSetterInjection">
+  <bean id="calculationSetterInjection" class="com.itera.spring.CalculationSetterInjection">
     <property name="calculator" ref="calculator"/>
     <property name="display" ref="display"/>
   </bean>
@@ -305,7 +305,7 @@ The context file becomes a lot smaller - it simply configures what packages to s
     http://www.springframework.org/schema/context/spring-context.xsd">
 
   <context:annotation-config/>
-  <context:component-scan base-package="no.itera.spring"/>
+  <context:component-scan base-package="com.itera.spring"/>
 </beans>
 ```
 

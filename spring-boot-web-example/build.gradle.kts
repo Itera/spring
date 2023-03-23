@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.spring") version "1.8.10"
 }
 
-group = "no.itera"
+group = "com.itera"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_19
 
