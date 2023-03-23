@@ -25,7 +25,6 @@ public class Application implements CommandLineRunner {
     CalculationConstructorInjection calculationConstructorInjection =
         context.getBean(CalculationConstructorInjection.class);
     calculationConstructorInjection.complexCalculation();
-
   }
 }
 
