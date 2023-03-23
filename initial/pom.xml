@@ -9,17 +9,16 @@
 	<description>Fagkveld - spring - starter with no spring and no injection</description>
 
 	<properties>
-		<java.version>17</java.version>
+		<java.version>19</java.version>
 	</properties>
 
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.1</version>
+				<version>3.11.0</version>
 				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
+					<release>${java.version}</release>
 				</configuration>
 			</plugin>
 		</plugins>
