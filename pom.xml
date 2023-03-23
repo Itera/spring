@@ -18,6 +18,7 @@
         <module>initial</module>
         <module>spring-boot-db-example</module>
         <module>spring-webclient-example</module>
+        <module>exercises</module>
     </modules>
 
 </project>
