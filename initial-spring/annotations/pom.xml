@@ -3,14 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>no.itera</groupId>
-	<artifactId>spring-xml-context</artifactId>
+	<artifactId>spring-annotations-context</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-annotations-context</name>
 	<description>Fagkveld - spring - spring-initial converted to spring with annotations and applicationContext.xml</description>
 
 	<properties>
-		<java.version>17</java.version>
-		<spring.version>5.3.24</spring.version>
+		<java.version>19</java.version>
+		<spring.version>6.0.6</spring.version>
 	</properties>
 
 	<dependencies>
@@ -35,10 +35,9 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.1</version>
+				<version>3.11.0</version>
 				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
+					<release>${java.version}</release>
 				</configuration>
 			</plugin>
 		</plugins>
