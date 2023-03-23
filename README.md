@@ -773,7 +773,7 @@ Add a config param to application.properties for the echo server url:
 echo.server.url=http://localhost:8000
 ```
 
-[^11]: For testing - https://github.com/rpatterson/httpd-echo
+[^11]: For testing - echo-server
 
 ---
 
