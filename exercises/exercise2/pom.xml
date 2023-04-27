@@ -10,7 +10,7 @@
 
 	<properties>
 		<java.version>19</java.version>
-		<spring.version>6.0.6</spring.version>
+		<spring.version>6.0.8</spring.version>
 	</properties>
 
 	<dependencies>

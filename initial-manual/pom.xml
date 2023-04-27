@@ -3,10 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.itera</groupId>
-	<artifactId>spring-manual</artifactId>
+	<artifactId>initial-manual</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-manual</name>
-	<description>Fagkveld - spring - spring-initial converted to manual injection</description>
+	<name>initial-manual</name>
+	<description>Spring - initial converted to manual injection</description>
 
 	<properties>
 		<java.version>19</java.version>

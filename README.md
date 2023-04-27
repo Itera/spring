@@ -182,6 +182,14 @@ OK - but how do we set up (or orchestrate) the application?
 
 ---
 
+# Exercise
+
+## Exercise 1
+
+Convert to use constructor based dependency injection
+
+---
+
 # Spring?
 
 So far we have seen DI but had to orchestrate the application by hand.
@@ -270,6 +278,14 @@ However - in nearly every project it is far far more common to use spring's appl
 
 ---
 
+# Exercise
+
+## Exercise 2
+
+Complete the context for a constructor injected application
+
+---
+
 ## Problems
 
 This works - but - it means that the XML file is tightly coupled to the class structures.
@@ -324,6 +340,14 @@ Injection points are often marked @Autowired [^6]
 ## Using the context
 
 The code in Application is exactly the same as for the XML version
+
+---
+
+# Exercise
+
+## Exercise 3
+
+Annotate the application correctly
 
 ---
 
@@ -412,6 +436,16 @@ public class  Application implements CommandLineRunner {
 https://start.spring.io/
 
 Under the Add Dependencies button you can see what starter packs you can add.
+
+---
+
+# Exercise
+
+## Exercise 4
+
+Create a new spring boot application.
+
+See exercise4/README.md
 
 ---
 
@@ -668,9 +702,19 @@ public Example addExample(@RequestBody Example example) {
 
 ---
 
+# Exercise
+
+## Exercise 5
+
+Create a new spring boot application using spring MVC.
+
+See exercise5/README.md
+
+---
+
 ## Example
 
-Let's take a look at an example project.[^9]
+Spring MVC project run through[^9]
 
 This time in kotlin with gradle using the kotlin DSL - just for fun.
 

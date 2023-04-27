@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.4</version>
+		<version>3.0.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.itera</groupId>
-	<artifactId>spring-boot</artifactId>
+	<artifactId>initial-spring-boot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot</name>
-	<description>Fagkveld - spring - spring-initial converted to spring-boot</description>
+	<name>initial-spring-boot</name>
+	<description>Spring - initial-manual converted to spring-boot</description>
 
 	<properties>
 		<java.version>19</java.version>

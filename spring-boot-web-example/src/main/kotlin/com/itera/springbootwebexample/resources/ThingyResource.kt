@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException
 
 @RestController
 class ThingyResource(val thingyService: ThingyService) {
+
     @GetMapping(path = ["/thingies"], produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
     fun allTheThings(): List<Thingy> = thingyService.allThingies()
@@ -22,15 +23,15 @@ class ThingyResource(val thingyService: ThingyService) {
     fun justTheThing(@PathVariable id: Int): Thingy =
         thingyService.oneThingy(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Thingy not found")
 
-    @PostMapping(path = ["/thingies"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    @ResponseBody
-    fun oneMoreThing(@RequestBody thing: Thingy): Thingy =
-        thingyService.addThingy(thing) ?: throw ResponseStatusException(HttpStatus.CONFLICT, "Thingy already exists")
-
     @DeleteMapping(path = ["/thingies"])
     fun oneLessThing(@RequestParam id: Int): ResponseEntity<Void> = if (thingyService.deleteThingy(id) != null) {
         ResponseEntity.noContent().build()
     } else {
         throw ResponseStatusException(HttpStatus.NOT_FOUND, "Thingy wasn't there")
     }
+
+    @PostMapping(path = ["/thingies"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    @ResponseBody
+    fun oneMoreThing(@RequestBody thing: Thingy): Thingy =
+        thingyService.addThingy(thing) ?: throw ResponseStatusException(HttpStatus.CONFLICT, "Thingy already exists")
 }

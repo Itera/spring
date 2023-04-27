@@ -6,11 +6,11 @@
 	<artifactId>spring-xml-context</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-xml-context</name>
-	<description>Fagkveld - spring - spring-initial converted to spring with applicationContext.xml</description>
+	<description>Spring - initial-manual converted to spring with applicationContext.xml</description>
 
 	<properties>
 		<java.version>19</java.version>
-		<spring.version>6.0.6</spring.version>
+		<spring.version>6.0.8</spring.version>
 	</properties>
 
 	<dependencies>

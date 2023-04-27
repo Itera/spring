@@ -1,6 +1,6 @@
 package com.itera.springbootwebexample.models
 
-data class Thingy (
+data class Thingy(
     val id: Int,
-    val name: String
+    val name: String,
 )
