@@ -9,8 +9,8 @@
 	<description>Spring - initial-manual converted to spring with applicationContext.xml</description>
 
 	<properties>
-		<java.version>19</java.version>
-		<spring.version>6.0.8</spring.version>
+		<java.version>20</java.version>
+		<spring.version>6.0.12</spring.version>
 	</properties>
 
 	<dependencies>

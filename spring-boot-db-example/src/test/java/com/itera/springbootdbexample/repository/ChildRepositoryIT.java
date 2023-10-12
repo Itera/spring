@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import com.itera.springbootdbexample.model.Child;
 
 import org.junit.jupiter.api.Test;
