@@ -1,7 +1,9 @@
 [versions]
-kotlin_version = "1.8.21"
-ktor_version = "2.2.4"
-logback_version = "1.4.6"
+detekt_version = "1.23.1"
+kotlin_version = "1.9.10"
+kotlinter_version = "3.14.0"
+ktor_version = "2.3.5"
+logback_version = "1.4.11"
 
 [libraries]
 ktor-server-core = { group = "io.ktor", name = "ktor-server-core-jvm", version.ref = "ktor_version" }
@@ -15,3 +17,5 @@ kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit"
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin_version" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor_version" }
+kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter_version" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt_version" }

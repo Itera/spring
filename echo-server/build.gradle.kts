@@ -1,6 +1,12 @@
 plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.ktor)
+    alias(libs.plugins.kotlinter)
+    alias(libs.plugins.detekt)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_20
 }
 
 group = "itera.com"
@@ -23,3 +29,13 @@ dependencies {
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)
 }
+
+tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xcontext-receivers")
+            jvmTarget = "20"
+        }
+    }
+}
+

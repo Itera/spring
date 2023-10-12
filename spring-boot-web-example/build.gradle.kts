@@ -1,35 +1,61 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id("org.springframework.boot") version "3.0.6"
-    id("io.spring.dependency-management") version "1.1.0"
-    kotlin("jvm") version "1.8.21"
-    kotlin("plugin.spring") version "1.8.21"
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.deps)
+    alias(libs.plugins.kotlinter)
+    alias(libs.plugins.detekt)
+    jacoco
 }
 
 group = "com.itera"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_19
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_20
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation(libs.spring.boot.starter.web)
+    implementation(libs.jackson)
+
+    testImplementation(libs.spring.boot.starter.test)
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "19"
+tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xcontext-receivers")
+            jvmTarget = "20"
+        }
     }
 }
 
-tasks.withType<Test> {
+
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+    }
+    dependsOn(tasks.test)
+}
+
+configurations.detekt {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.jetbrains.kotlin") {
+            // Detekt needs 1.9.0 to run - this gets around a compatibility issue with spring dependency plugin
+            useVersion("1.9.0")
+        }
+    }
 }

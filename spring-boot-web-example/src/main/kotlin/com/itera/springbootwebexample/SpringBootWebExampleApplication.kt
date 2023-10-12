@@ -7,5 +7,6 @@ import org.springframework.boot.runApplication
 class SpringBootWebExampleApplication
 
 fun main(args: Array<String>) {
+    @Suppress("SpreadOperator")
     runApplication<SpringBootWebExampleApplication>(*args)
 }
