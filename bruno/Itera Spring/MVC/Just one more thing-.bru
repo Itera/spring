@@ -1,0 +1,22 @@
+meta {
+  name: Just one more thing-
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8080/thingies
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+  	"id": 5,
+  	"name": "Thingy 5"
+  }
+}
