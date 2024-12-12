@@ -1,9 +1,9 @@
 [versions]
-detekt_version = "1.23.1"
-kotlin_version = "1.9.10"
-kotlinter_version = "3.14.0"
-ktor_version = "2.3.5"
-logback_version = "1.4.11"
+detekt_version = "1.23.7"
+kotlin_version = "2.0.10"
+kotlinter_version = "5.0.0"
+ktor_version = "3.0.2"
+logback_version = "1.5.12"
 
 [libraries]
 ktor-server-core = { group = "io.ktor", name = "ktor-server-core-jvm", version.ref = "ktor_version" }
@@ -11,11 +11,11 @@ ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty-jvm", version
 
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback_version" }
 
-ktor-server-tests = { group = "io.ktor", name = "ktor-server-tests-jvm", version.ref = "ktor_version" }
 kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin_version" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor_version" }
 
 [plugins]
-kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin_version" }
-ktor = { id = "io.ktor.plugin", version.ref = "ktor_version" }
-kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter_version" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt_version" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin_version" }
+kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter_version" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor_version" }

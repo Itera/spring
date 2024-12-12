@@ -10,13 +10,14 @@ import kotlin.test.assertEquals
 
 class ApplicationTest {
     @Test
-    fun testRoot() = testApplication {
-        application {
-            configureRouting()
+    fun testRoot() =
+        testApplication {
+            application {
+                configureRouting()
+            }
+            client.get("/").apply {
+                assertEquals(HttpStatusCode.OK, status)
+                assertEquals("No value passed", bodyAsText())
+            }
         }
-        client.get("/").apply {
-            assertEquals(HttpStatusCode.OK, status)
-            assertEquals("No value passed", bodyAsText())
-        }
-    }
 }

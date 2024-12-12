@@ -19,26 +19,33 @@ import org.springframework.web.server.ResponseStatusException
 // server.error.include-message property
 
 @RestController
-class ThingyResource(val thingyService: ThingyService) {
-
+class ThingyResource(
+    val thingyService: ThingyService,
+) {
     @GetMapping(path = ["/thingies"], produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
     fun allTheThings(): List<Thingy> = thingyService.allThingies()
 
     @GetMapping(path = ["/thingies/{id}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
-    fun justTheThing(@PathVariable id: Int): Thingy =
-        thingyService.oneThingy(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Thingy not found")
+    fun justTheThing(
+        @PathVariable id: Int,
+    ): Thingy = thingyService.oneThingy(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Thingy not found")
 
     @DeleteMapping(path = ["/thingies"])
-    fun oneLessThing(@RequestParam id: Int): ResponseEntity<Void> = if (thingyService.deleteThingy(id) != null) {
-        ResponseEntity.noContent().build()
-    } else {
-        throw ResponseStatusException(HttpStatus.NOT_FOUND, "Thingy wasn't there")
-    }
+    fun oneLessThing(
+        @RequestParam id: Int,
+    ): ResponseEntity<Void> =
+        if (thingyService.deleteThingy(id) != null) {
+            ResponseEntity.noContent().build()
+        } else {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Thingy wasn't there")
+        }
 
     @PostMapping(path = ["/thingies"], produces = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseBody
-    fun oneMoreThing(@RequestBody thing: Thingy): Thingy =
+    fun oneMoreThing(
+        @RequestBody thing: Thingy,
+    ): Thingy =
         thingyService.addThingy(thing) ?: throw ResponseStatusException(HttpStatus.CONFLICT, "Thingy already exists")
 }

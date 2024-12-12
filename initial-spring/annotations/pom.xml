@@ -9,8 +9,8 @@
 	<description>Spring - initial-manual converted to spring with annotations and applicationContext.xml</description>
 
 	<properties>
-		<java.version>20</java.version>
-		<spring.version>6.0.12</spring.version>
+		<java.version>21</java.version>
+		<spring.version>6.2.0</spring.version>
 	</properties>
 
 	<dependencies>
@@ -35,7 +35,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version>
+				<version>3.13.0</version>
 				<configuration>
 					<release>${java.version}</release>
 				</configuration>

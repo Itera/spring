@@ -11,12 +11,12 @@ plugins {
 group = "com.itera"
 version = "0.0.1-SNAPSHOT"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_20
-}
-
 repositories {
     mavenCentral()
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 dependencies {
@@ -24,15 +24,6 @@ dependencies {
     implementation(libs.jackson)
 
     testImplementation(libs.spring.boot.starter.test)
-}
-
-tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xcontext-receivers")
-            jvmTarget = "20"
-        }
-    }
 }
 
 
@@ -49,13 +40,4 @@ tasks.jacocoTestReport {
         xml.required.set(true)
     }
     dependsOn(tasks.test)
-}
-
-configurations.detekt {
-    resolutionStrategy.eachDependency {
-        if (requested.group == "org.jetbrains.kotlin") {
-            // Detekt needs 1.9.0 to run - this gets around a compatibility issue with spring dependency plugin
-            useVersion("1.9.0")
-        }
-    }
 }
